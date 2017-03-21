@@ -62,3 +62,7 @@
     });
 
 })(jQuery); // End of use strict
+
+// $(document).ready(function(){
+//     $("#getStarted").click(function(){
+//         $(this).hide();
