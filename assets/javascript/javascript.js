@@ -70,11 +70,8 @@
 
 })(jQuery); // End of use strict
 
- $(document).on("click", "#startButton",function(e){
 
-    console.log("hey");
- });
-
-
-
+// $(document).ready(function(){
+//     $("#getStarted").click(function(){
+//         $(this).hide();
 
