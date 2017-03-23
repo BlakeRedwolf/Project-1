@@ -23,7 +23,7 @@ var app = {
 
 	search:function() {
 		var queryURL = 'https://api.data.gov/ed/collegescorecard/v1/schools?api_key=D7r68I5ZV97qXjLtrdTqnxqPTb750zgQrIaRm21s'; 
-		var queryFields = '&fields=school.name,school.city,school.zip,school.state,school.school_url'
+		var queryFields = '&fields=2014.cost.attendance.academic_year,2014.admissions.admission_rate_overall,2014.completion.completion_rate_4yr_150nt,school.name,school.city,school.zip,school.state,school.school_url'
 		queryURL += queryFields;
 		var search = {};
 		var name = $('#name').val();
@@ -42,6 +42,7 @@ var app = {
           method: "GET"
         })// After data comes back from the request
         .done(function(response) {
+        	console.log(response);
         	app.renderSearchResult(response.results);
         })
         return search;
@@ -57,7 +58,7 @@ var app = {
 
 
 		searchMatch.append(table);
-		var tableHeaders = ['Name', 'Zip', 'City',  'State', 'Url']
+		var tableHeaders = ['Name', 'Zip', 'City',  'State', 'Url', 'Tuition', 'Admission Rate','Completion w/in 6yrs']
 		
 		var headerRow = $('<tr>');
 		headerRow.attr('scope','row');
@@ -72,7 +73,7 @@ var app = {
 		var tableBody= $('<tbody>');
 		table.append(tableBody);
 
-		var fields = ['school.name','school.zip', 'school.city','school.state','school.school_url'];
+		var fields = ['school.name','school.zip', 'school.city','school.state','school.school_url','2014.cost.attendance.academic_year','2014.admissions.admission_rate_overall','2014.completion.completion_rate_4yr_150nt'];
 		for(var i = 0;i<data.length;i++) {
 			var school = data[i];
 			var row = $('<tr>');
