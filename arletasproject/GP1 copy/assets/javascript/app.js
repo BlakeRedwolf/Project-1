@@ -26,13 +26,13 @@ var app = {
 		var queryFields = '&fields=school.name,school.city,school.zip,school.state,school.school_url'
 		queryURL += queryFields;
 		var search = {};
-		var name = $('#name').val();
+		var name = $('#name').val().trim();
 		if(name.trim() != "") {
 			queryURL += '&school.name=' + name;
 			search['name'] = name;
 		}
 
-		var city = $('#city').val();
+		var city = $('#city').val().trim();
 		if(city.trim() != ""){
 			queryURL += '&school.city=' + city;
 			search['city'] = city;
@@ -46,6 +46,24 @@ var app = {
         })
         return search;
   	},
+
+	getty:function(){
+		var queryURL = 'https://api.gettyimages.com/v3/t4a9fvekkt5ecug5dr7zveqt'
+		var search = {};
+
+	$.ajax({
+          url: queryURL,
+          method: "GET"
+        })// After data comes back from the request
+        .done(function(response) {
+        	app.renderSearchResult(response.results);
+        })
+        return search;
+
+
+	},
+
+
 
 	renderSearchResult: function(data) {
 		var searchMatch = $('#search-match');

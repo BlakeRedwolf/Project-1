@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>getty images</title>
+</head>
+<body>
+
+<div class="container">
+
+<form id="search-form">
+<label for="college-img">Search</label>
+<input type="text" id="college-input">
+<button id="Search">Submit</button>
+</form>
+
+<div id="images"></div>
+
+</div>
+
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+<script type="text/javascript">
+
+var images =[];
+
+function displayColleges() {
+
+	var colleges = $(this).attr("data-name");
+
+	 var apiKey = "t4a9fvekkt5ecug5dr7zveqt";
+
+	var queryURL = "https://api.gettyimages.com/v3/search/images?phrase=" + colleges ; 
+
+
+
+	
+
+	$.ajax({
+			headers:{'Api-key':'t4a9fvekkt5ecug5dr7zveqt'},
+			url:queryURL,
+			method:"GET"
+
+	})
+	.done(function(response){
+		console.log(queryURL);
+		console.log(response);
+
+		var results = response.images;
+		console.log("respose array",results);
+		console.log("here is results i", results[0]);
+		console.log("lets see what is display_sizes", results[0].display_sizes);
+		console.log("url",results[0].display_sizes[0].uri);
+
+
+		for (var i=0; i<results.length; i++){
+
+			var collegesDiv = $("<div class='colleges'>");
+			
+			var collegeImages = $("<img>");
+
+       	collegeImages.attr({"src":results[i].display_sizes[0].uri});
+
+       	collegesDiv.append(collegeImages);
+       	$("#images").prepend(collegesDiv);
+
+       	}
+    });
+}
+
+$(document).on("click", displayColleges);
+
+
+
+
+</script>
+</body>
+</html>
