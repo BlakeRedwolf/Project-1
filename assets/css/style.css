@@ -157,17 +157,17 @@ header {
 
 .tinted-image {
   background: 
-    /* top, transparent red, faked with gradient */ 
+    /* top */
     linear-gradient(
       rgba(120, 116, 115, 0.50), 
       rgba(120, 116, 115, 0.50)
     ),
-/*     bottom, image */
+    /* bottom, image */
     url('../images/ucla_2016.jpg');
-/*
-  width: auto;
-  height: auto;
-*/
+    /*
+      width: auto;
+      height: auto;
+    */
 }
 
 header .header-content {
