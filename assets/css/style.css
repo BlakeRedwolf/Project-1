@@ -150,10 +150,26 @@ header {
   background-size: cover;
   -o-background-size: cover;
   background-position: center;
-  background-image: url('../images/header.jpg');
+  background-image: url('../images/ucla_2016.jpg');
   text-align: center;
   color: white;
 }
+
+.tinted-image {
+  background: 
+    /* top, transparent red, faked with gradient */ 
+    linear-gradient(
+      rgba(120, 116, 115, 0.50), 
+      rgba(120, 116, 115, 0.50)
+    ),
+/*     bottom, image */
+    url('../images/ucla_2016.jpg');
+/*
+  width: auto;
+  height: auto;
+*/
+}
+
 header .header-content {
   position: relative;
   text-align: center;
