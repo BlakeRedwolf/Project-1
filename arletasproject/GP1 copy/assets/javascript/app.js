@@ -27,7 +27,7 @@ var app = {
 
 	search:function() {
 		var queryURL = 'https://api.data.gov/ed/collegescorecard/v1/schools?api_key=D7r68I5ZV97qXjLtrdTqnxqPTb750zgQrIaRm21s'; 
-		var queryFields = '&fields=school.name,school.city,school.zip,school.state,school.school_url';
+		var queryFields = '&fields=2014.student.retention_rate.four_year.full_time,2014.cost.attendance.academic_year,school.name,2014.completion.completion_rate_4yr_150nt,school.city,school.zip,school.state,school.school_url';
 		queryURL += queryFields;
 		var search = {};
 		
@@ -55,7 +55,7 @@ var app = {
 
 	renderSearchResult: function(data) {
 		var searchMatch = $('#search-match');
-		searchMatch.empty();
+		// searchMatch.empty();
 		
 		var table = $('<table>');
 		table.addClass('table');
@@ -63,22 +63,22 @@ var app = {
 
 
 		searchMatch.append(table);
-		var tableHeaders = ['Name', 'Zip', 'City',  'State', 'Url']
+		var tableHeaders = ['Name', 'Zip', 'City', 'State', 'Url', 'Tutition', 'Students that gradute in 6 years', 'Rentention Rate']// Tutition Students who gradute in 6 years Retention Rate
 		
 		var headerRow = $('<tr>');
 		headerRow.attr('scope','row');
 		table.append(headerRow);
 
-		for(var i=0;i<tableHeaders.length;i++){
-			var headerCell = $('<th>');
-			headerCell.text(tableHeaders[i]);
-			headerRow.append(headerCell);
-		}
+		// for(var i=0;i<tableHeaders.length;i++){
+		// 	var headerCell = $('<th>');
+		// 	headerCell.text(tableHeaders[i]);
+		// 	headerRow.append(headerCell);
+		// }
 
 		var tableBody= $('<tbody>');
 		table.append(tableBody);
 
-		var fields = ['school.name','school.zip', 'school.city','school.state','school.school_url'];
+		var fields = ['school.name','school.city','school.state','school.school_url', '2014.cost.attendance.academic_year','2014.completion.completion_rate_4yr_150nt','2014.student.retention_rate.four_year.full_time'];
 		for(var i = 0;i<data.length;i++) {
 			var school = data[i];
 			var row = $('<tr>');
@@ -204,7 +204,7 @@ var app = {
 				console.log('reading search: ' + k);
 				app.searches[k] = recordWithId[k];
 			}
-			app.renderHistory();
+			// app.renderHistory();
 		});
 	}
 				//clear all database
