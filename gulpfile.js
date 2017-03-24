@@ -13,7 +13,6 @@ var pkg = require('./package.json');
 gulp.task('less', function() {
     return gulp.src('assets/less/*.less')
         .pipe(less())
-
         .pipe(gulp.dest('less'))
         .pipe(browserSync.reload({
             stream: true
@@ -49,31 +48,31 @@ gulp.task('lint', function() {
         .pipe(jshint.reporter('default'));
 });
 
-// Concatenate & Minify JS
-gulp.task('scripts', function() {
-    return gulp.src('assets/javascript/*.js')
-        .pipe(concat('all.js'))
-        .pipe(gulp.dest('dist'))
-        .pipe(rename('all.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist/js'));
-});
+// // Concatenate & Minify JS
+// gulp.task('scripts', function() {
+//     return gulp.src('assets/javascript/*.js')
+//         .pipe(concat('all.js'))
+//         .pipe(gulp.dest('dist'))
+//         .pipe(rename('all.min.js'))
+//         .pipe(uglify())
+//         .pipe(gulp.dest('dist/js'));
+// });
 
-// Watch Files For Changes
-gulp.task('watch', function() {
-    gulp.watch('assets/javascript/*.js', ['lint', 'scripts']);
-    gulp.watch('assets/css/*.css', ['css']);
-});
+// // Watch Files For Changes
+// gulp.task('watch', function() {
+//     gulp.watch('assets/javascript/*.js', ['lint', 'scripts']);
+//     gulp.watch('assets/css/*.css', ['css']);
+// });
 
 // Run all this shit
-gulp.task('default', ['minify-css', 'scripts', 'watch']); //'lint',
+gulp.task('default', ['minify-css', 'minify-js', 'watch']); //'lint',
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
     browserSync.init({
         server: {
             baseDir: ''
-        },
+        }
     })
 });
 
