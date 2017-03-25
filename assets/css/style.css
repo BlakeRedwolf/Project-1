@@ -262,7 +262,6 @@ header .header-content .header-content-inner p {
 }
 
 .service-box {
-  max-width: 400px;
   margin: 50px auto 0;
 }
 
@@ -500,3 +499,26 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #222222;
 }
+
+th{
+  background-color:#CCC;
+  color:#000000;
+  text-align:center;
+  font-weight:bold;
+}
+
+.card{
+  padding:15px 0;
+}
+
+#nytDiv {
+  padding:25px 0; 
+}
+
+#nytDiv a{
+  text-align:center;
+  font-weight:bold;
+  font-size:120%;
+  line-height:200%;
+}
+
