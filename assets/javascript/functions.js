@@ -147,7 +147,7 @@ var app = {
 
 		$('#search-history').empty();
 		var list = $('<ul>')
-		list.addClass('list-group');
+		list.addClass('list-unstyled');
 		$('#search-history').append(list);
 
 
@@ -155,8 +155,8 @@ var app = {
 		
 			//show no more then 20 most popular searches
 			var maxHistryCount = sortedRecords.length;
-			if(maxHistryCount > 20) {
-				maxHistryCount = 20;
+			if(maxHistryCount > 5) {
+				maxHistryCount = 5;
 			}
 			for(var i = 0;i< maxHistryCount;i++) {
 				var record = sortedRecords[i] 
@@ -174,9 +174,10 @@ var app = {
 					title  += record[key]
 				}
 
-				item.addClass('list-group-item');
+				//item.addClass('list-group-item');
 				item.addClass('d-flex');
-				item.addClass('justify-content-between');
+				item.css('display', 'flex');
+				item.css('justify-content','space-between');
 				list.append(item);
 				item.attr('data-search', search);
 				item.attr('data-id', record.id);
@@ -201,24 +202,17 @@ var app = {
 					$('#city').val(city);
 
 					app.search(true);
-					
-
 				})
 			}
-			
-
-
-
 	},
 
 	setReadListener: function() {
 		this.database.ref().on("value", function(data) {
 			var recordWithId = data.val();
 			for(var k in  recordWithId) {
-				//console.log('reading search: ' + k);
 				app.searches[k] = recordWithId[k];
 			}
-			// app.renderHistory();
+			 app.renderHistory();
 		});
 	}
 				//clear all database
@@ -280,7 +274,7 @@ function loadnews() {
             //console.log(anchor);
             
             $("#nytDiv").append(nytDiv);
-            console.log(nytDiv);
+            //console.log(nytDiv);
 
           };
         });
