@@ -65,7 +65,7 @@ var app = {
 		
 		var table = $('<table>');
 		table.addClass('table');
-		table.addClass('table-striped');
+		table.addClass('table-bordered');
 
 
 		searchMatch.append(table);
