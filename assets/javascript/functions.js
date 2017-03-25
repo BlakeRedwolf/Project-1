@@ -32,6 +32,7 @@ var app = {
     },
 
 	search:function() {
+		$('#search-match').empty();
 		var queryURL = 'https://api.data.gov/ed/collegescorecard/v1/schools?api_key=D7r68I5ZV97qXjLtrdTqnxqPTb750zgQrIaRm21s'; 
 		var queryFields = '&fields=2014.student.retention_rate.four_year.full_time,2014.cost.attendance.academic_year,school.name,2014.completion.completion_rate_4yr_150nt,school.city,school.zip,school.state,school.school_url';
 		queryURL += queryFields;
@@ -69,12 +70,19 @@ var app = {
 
 
 		searchMatch.append(table);
-		var tableHeaders = ['Name', 'Zip', 'City', 'State', 'Url', 'Tutition', 'Students that gradute in 6 years', 'Rentention Rate']// Tutition Students who gradute in 6 years Retention Rate
-		
+	
+		var tableHeads = '<tr>';
+		var tableHeaders = ['Name', 'City', 'State', 'Url', 'Tutition', 'Grad < 6 Yrs', 'Rentention Rate']// Tutition Students who gradute in 6 years Retention Rate
+		for(var i = 0;i<tableHeaders.length;i++) {
+			tableHeads += '<th>'+tableHeaders[i]+'</th>';
+		}
+		tableHeads += '</tr>';
+		table.append(tableHeads);
+
 		var headerRow = $('<tr>');
 		headerRow.attr('scope','row');
 		table.append(headerRow);
-
+	
 		// for(var i=0;i<tableHeaders.length;i++){
 		// 	var headerCell = $('<th>');
 		// 	headerCell.text(tableHeaders[i]);
@@ -228,3 +236,57 @@ $(document).ready(function() {
 		app.searchAndAdd();
 	})
 })
+
+
+function loadnews() {
+      //alert('Fired');
+      //$("#nytDiv").empty();
+      
+      // Constructing a queryURL using the animal name
+      var queryURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=college+admission+sat&fq=type_of_material('Article')ANDnews_desk:('Op-Ed')&?begin_date=20170101&api-key=84acc639b7af470facdac4d12ca2b946"      
+
+		$.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        // After data comes back from the request
+        .done(function(response) {
+          //console.log(queryURL);
+          //console.log(response);
+
+          var results = response.response.docs;
+          //console.log(results);
+          //return;
+          for (var i = 0; i < 6; i++) {
+          	//console.log(i);
+          	//console.log(results[i].multimedia[0].url);
+
+          	// Creating and storing a div tag
+           
+            var nytDiv = $('<div></div>');
+            var anchor = $("<a></a>");
+            //var img = $("<img>");
+            //var ur = results[i].multimedia[0].url;
+            //var hr = 'http://www.nytimes.com/'+ur;
+            //console.log(hr);
+            //img.attr("src", hr);
+            //console.log(hr);
+            //return;
+            anchor.attr("href", results[i].web_url);
+            anchor.text(results[i].headline.main);
+             // img.attr('src', results[i].multimedia[1].url);
+            //nytDiv.append(img);
+            nytDiv.append(anchor);
+            //console.log(anchor);
+            
+            $("#nytDiv").append(nytDiv);
+            console.log(nytDiv);
+
+          };
+        });
+  
+};
+
+$( document ).ready(function() {
+		loadnews();
+	})
