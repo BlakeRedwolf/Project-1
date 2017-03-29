@@ -1,17 +1,5 @@
-// Initialize Firebase
-  // dbconfig = {
-  //   apiKey: "AIzaSyCA4hOk8RMSQ2VFfhSU_yEbax-arF8-Rps",
-  //   authDomain: "project-1-9fe5d.firebaseapp.com",
-  //   databaseURL: "https://project-1-9fe5d.firebaseio.com",
-  //   storageBucket: "project-1-9fe5d.appspot.com",
-  //   messagingSenderId: "6250521181"
-  // };
-  // firebase.initializeApp(config);
-
 var app = {
-
    searches: {},
-
    dbconfig: {
     apiKey: "AIzaSyCA4hOk8RMSQ2VFfhSU_yEbax-arF8-Rps",
     authDomain: "project-1-9fe5d.firebaseapp.com",
@@ -24,7 +12,6 @@ var app = {
 		 firebase.initializeApp(this.dbconfig);
 		 this.database = firebase.database();
     },
-
 
     searchAndAdd:function() {
       var search = this.search();
@@ -53,7 +40,7 @@ var app = {
 		 $.ajax({
           url: queryURL,
           method: "GET"
-        })// After data comes back from the request
+        })
         .done(function(response) {
         	app.renderSearchResult(response.results);
         })
@@ -62,17 +49,14 @@ var app = {
 
 	renderSearchResult: function(data) {
 		var searchMatch = $('#search-match');
-		// searchMatch.empty();
-		
 		var table = $('<table>');
+
 		table.addClass('table');
 		table.addClass('table-bordered');
-
-
 		searchMatch.append(table);
-	
+
 		var tableHeads = '<tr>';
-		var tableHeaders = ['Name', 'City', 'State', 'Url', 'Tutition', 'Grad < 6 Yrs', 'Rentention Rate']// Tutition Students who gradute in 6 years Retention Rate
+		var tableHeaders = ['Name', 'City', 'State', 'Url', 'Tutition', 'Grad < 6 Yrs', 'Rentention Rate']
 		for(var i = 0;i<tableHeaders.length;i++) {
 			tableHeads += '<th>'+tableHeaders[i]+'</th>';
 		}
@@ -82,12 +66,6 @@ var app = {
 		var headerRow = $('<tr>');
 		headerRow.attr('scope','row');
 		table.append(headerRow);
-	
-		// for(var i=0;i<tableHeaders.length;i++){
-		// 	var headerCell = $('<th>');
-		// 	headerCell.text(tableHeaders[i]);
-		// 	headerRow.append(headerCell);
-		// }
 
 		var tableBody= $('<tbody>');
 		table.append(tableBody);
@@ -113,7 +91,7 @@ var app = {
 		criteria.counter = 1;
 		criteria.id = searchId;
 
-		//create or udpate counter
+		// Create or udpate counter.
 		this.database.ref(searchId).transaction(function(record) {
 			if(record) {
 				record.counter = record.counter + 1;
@@ -131,7 +109,7 @@ var app = {
 			record.id = k;
 			result.push(record);
 		}
-		//actual sorting
+		// Actual sorting.
 		for(var i = 0; i < result.length - 1;i++) {
 			for(var j = i + 1; j < result.length; j++) {
 				if(result[i].counter < result[j].counter) {
@@ -144,16 +122,11 @@ var app = {
 		return result;
 	},
 	renderHistory: function() {
-
 		$('#search-history').empty();
 		var list = $('<ul>')
 		list.addClass('list-group');
 		$('#search-history').append(list);
-
-
 			var sortedRecords = this.sortSearchByCount();
-		
-			//show no more then 20 most popular searches
 			var maxHistryCount = sortedRecords.length;
 			if(maxHistryCount > 20) {
 				maxHistryCount = 20;
@@ -182,7 +155,6 @@ var app = {
 				item.attr('data-id', record.id);
 				var searchText = $('<span>');
 								
-
 				searchText.text(title);
 				item.append(searchText);
 
@@ -201,91 +173,51 @@ var app = {
 					$('#city').val(city);
 
 					app.search(true);
-					
-
 				})
 			}
-			
-
-
-
-	},
+		},
 
 	setReadListener: function() {
 		this.database.ref().on("value", function(data) {
 			var recordWithId = data.val();
 			for(var k in  recordWithId) {
-				//console.log('reading search: ' + k);
 				app.searches[k] = recordWithId[k];
 			}
-			// app.renderHistory();
 		});
 	}
-				//clear all database
 };
-
 
 $(document).ready(function() {
 	
 	app.initFirebase();
 	app.setReadListener();
-	//firebase.database().ref().remove();
-
 
 	$('#search').click(function() {
 		app.searchAndAdd();
 	})
 })
 
-
 function loadnews() {
-      //alert('Fired');
-      //$("#nytDiv").empty();
-      
-      // Constructing a queryURL using the animal name
-      var queryURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=college+admission+sat&fq=type_of_material('Article')ANDnews_desk:('Op-Ed')&?begin_date=20170101&api-key=84acc639b7af470facdac4d12ca2b946"      
 
+  var queryURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=college+admission+sat&fq=type_of_material('Article')ANDnews_desk:('Op-Ed')&?begin_date=20170101&api-key=84acc639b7af470facdac4d12ca2b946"      
 		$.ajax({
           url: queryURL,
           method: "GET"
         })
-        // After data comes back from the request
         .done(function(response) {
-          //console.log(queryURL);
-          //console.log(response);
 
           var results = response.response.docs;
-          //console.log(results);
-          //return;
           for (var i = 0; i < 6; i++) {
-          	//console.log(i);
-          	//console.log(results[i].multimedia[0].url);
-
-          	// Creating and storing a div tag
-           
             var nytDiv = $('<div></div>');
             var anchor = $("<a></a>");
-            //var img = $("<img>");
-            //var ur = results[i].multimedia[0].url;
-            //var hr = 'http://www.nytimes.com/'+ur;
-            //console.log(hr);
-            //img.attr("src", hr);
-            //console.log(hr);
-            //return;
             anchor.attr("href", results[i].web_url);
             anchor.text(results[i].headline.main);
-             // img.attr('src', results[i].multimedia[1].url);
-            //nytDiv.append(img);
             nytDiv.append(anchor);
-            //console.log(anchor);
-            
             $("#nytDiv").append(nytDiv);
             console.log(nytDiv);
-
           };
         });
-  
-};
+			};
 
 $( document ).ready(function() {
 		loadnews();
